@@ -31,9 +31,9 @@ function updateGlobalSoundSettings(callback) {
 
 function updateUserSoundSettings(callback) {
 	const keys = ['notificationSound', 'incomingChatSound', 'outgoingChatSound'];
-	
+
 	batch.processSortedSet('users:joindate', processUserBatch, callback);
-	
+
 	function processUserBatch(ids, next) {
 		async.each(ids, updateUserSettings, next);
 	}
