@@ -13,7 +13,6 @@ const soundMap = {
 
 function updateGlobalSoundSettings(callback) {
 	const keys = ['chat-incoming', 'chat-outgoing', 'notification'];
-	
 	db.getObject('settings:sounds', (err, settings) => {
 		if (err || !settings) {
 			return callback(err);
@@ -34,7 +33,7 @@ function updateUserSoundSettings(callback) {
 	const keys = ['notificationSound', 'incomingChatSound', 'outgoingChatSound'];
 	
 	batch.processSortedSet('users:joindate', processUserBatch, callback);
-
+	
 	function processUserBatch(ids, next) {
 		async.each(ids, updateUserSettings, next);
 	}
