@@ -12,6 +12,7 @@ const soundMap = {
 };
 
 function updateGlobalSoundSettings(callback) {
+	console.log("updateGlobalSoundSettings");
 	const keys = ['chat-incoming', 'chat-outgoing', 'notification'];
 	db.getObject('settings:sounds', (err, settings) => {
 		if (err || !settings) {
@@ -30,15 +31,19 @@ function updateGlobalSoundSettings(callback) {
 }
 
 function updateUserSoundSettings(callback) {
+	console.log("updateUserSoundSettings");
+
 	const keys = ['notificationSound', 'incomingChatSound', 'outgoingChatSound'];
 
 	batch.processSortedSet('users:joindate', processUserBatch, callback);
 
 	function processUserBatch(ids, next) {
+		console.log("processUserBatch");
 		async.each(ids, updateUserSettings, next);
 	}
 
 	function updateUserSettings(uid, next) {
+		console.log("updateUserSettings");
 		db.getObject(`user:${uid}:settings`, (err, settings) => {
 			if (err || !settings) {
 				return next(err);
